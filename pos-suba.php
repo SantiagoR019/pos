@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $order_id = intval($data['id']);
 
         // Consulta para obtener el pedido
-        $sql = "SELECT * FROM `wp_wc_orders` WHERE status='wc-completed' AND billing_email LIKE '%soledad@buhosnocturnos.co%' and  impreso = '0'  ORDER BY ID desc";
+        $sql = "SELECT * FROM `wp_wc_orders` WHERE status='wc-completed' AND billing_email LIKE '%suba@buhosnocturnos.co%' and  impreso = '0'  ORDER BY ID desc";
         $result = mysqli_query($con, $sql);
 
         if ($result && mysqli_num_rows($result) > 0) {

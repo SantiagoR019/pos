@@ -317,7 +317,7 @@ while($crow = mysqli_fetch_assoc($result)) {
     $ids = $crow['ID']; 
     $direccion = $crow['post_excerpt']; 
 
-    $consulta2 = "SELECT * FROM `wpc7_postmeta` WHERE `post_id` = ".$ids." AND `meta_value` = '         soledad@licoresbuhosnocturnos.com '";
+    $consulta2 = "SELECT * FROM `wpc7_postmeta` WHERE `post_id` = ".$ids." AND `meta_value` like '%soledad@licoresbuhosnocturnos.com%'";
     $result1 = mysqli_query($con, $consulta2);
     while($crow1 = mysqli_fetch_assoc($result1)) {
 
