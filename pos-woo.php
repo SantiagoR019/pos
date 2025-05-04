@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $printer = new Printer($connector);
 
             
-
+//RECIBO PEQUEÑO
 # Vamos a alinear al centro lo próximo que imprimamos
 $printer->setJustification(Printer::JUSTIFY_CENTER);
 
@@ -89,20 +89,28 @@ $suma_total = 0;
 
     }
 
-        $ttot = "SELECT * FROM `wp_wc_orders_meta` WHERE `order_id` = ".$ids." AND `meta_key` = '_pos_cash_amount_tendered'";
-    $result1ttot = mysqli_query($con, $ttot);
-    while($crow1ttot = mysqli_fetch_assoc($result1ttot)) {
-     $idtts = $crow1ttot['meta_value']; 
-     $printer->text("-----------------------------"."\n");
-$printer->setJustification(Printer::JUSTIFY_CENTER);
+        //         $ttot = "SELECT * FROM `wp_wc_orders_meta` WHERE `order_id` = ".$ids." AND `meta_key` = '_pos_cash_amount_tendered'";
+        //     $result1ttot = mysqli_query($con, $ttot);
+        //     while($crow1ttot = mysqli_fetch_assoc($result1ttot)) {
+        //      $idtts = $crow1ttot['meta_value']; 
+        //      $printer->text("-----------------------------"."\n");
+        // $printer->setJustification(Printer::JUSTIFY_CENTER);
 
-$nombre_format_francais = number_format($idtts, 2, ',', ' ');
-$printer -> setTextSize(2, 2);
+        // $nombre_format_francais = number_format($idtts, 2, ',', ' ');
+        // $printer -> setTextSize(2, 2);
 
-$printer->text("TOTAL: $".$nombre_format_francais."\n");
-$printer -> setTextSize(1, 1);
+        // $printer->text("TOTAL: $" . number_format($totalPedido, 2) . "\n");
+        // $printer -> setTextSize(1, 1);
 
-}
+        // }
+
+  // Imprime el TOTAL:
+  $printer->text("-----------------------------\n");
+  $printer->setJustification(Printer::JUSTIFY_CENTER);
+  $printer->setTextSize(2, 2);
+  $printer->text("TOTAL: $" . number_format($totalPedido, 2) . "\n");
+  $printer->setTextSize(1, 1);
+  
     
 $printer->text("" . "\n");
 $printer->setJustification(Printer::JUSTIFY_CENTER);
@@ -136,7 +144,7 @@ $printer->pulse();
     Para imprimir realmente, tenemos que "cerrar"
     la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
 */
-
+//RECIBO COMPLETO
 $printer->close();
 
 $connector = new WindowsPrintConnector($nombre_impresora);
