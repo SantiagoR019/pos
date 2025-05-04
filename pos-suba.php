@@ -30,83 +30,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $connector = new WindowsPrintConnector($nombre_impresora);
             $printer = new Printer($connector);
 
-            
-# Vamos a alinear al centro lo próximo que imprimamos
-$printer->setJustification(Printer::JUSTIFY_CENTER);
 
-
-    
-
-$ids = $crow['id']; 
-$printer -> setTextSize(2, 2);
-$printer->text("" . "\n");
-$printer->text("Orden #: ".$ids."\n");
-$printer -> setTextSize(1, 1);
-$printer->text("" . "\n");
-
-#La fecha también
-$printer->text(date("Y-m-d H:i:s") . "\n");
-$printer->text("-----------------------------" . "\n");
-$printer->setJustification(Printer::JUSTIFY_LEFT);
-$printer->text("CANTIDAD  PRODUCTO    PRECIO.\n");
-$printer->text("-----------------------------"."\n");
-
-    $consulta2PR = "SELECT * FROM `wp_woocommerce_order_items` WHERE `order_id` = ".$ids."";
-    $result1PR = mysqli_query($con, $consulta2PR);
-    $printer->setJustification(Printer::JUSTIFY_LEFT);
-    while($crow1PR = mysqli_fetch_assoc($result1PR)) {
-    $idcan = $crow1PR['order_item_id']; 
-
-    $preccant = "SELECT * FROM `wp_woocommerce_order_itemmeta` WHERE `order_item_id` = ".$idcan." AND meta_key = '_line_total'";
-    $result1PRca = mysqli_query($con, $preccant);
-    while($crow1PRcant = mysqli_fetch_assoc($result1PRca)) {
-
-            $TOTAL = $crow1PRcant['meta_value']; 
-            //$TOTAL = $crow1PRcant['meta_value']; 
-
-        
-    $preccant = "SELECT * FROM `wp_woocommerce_order_itemmeta` WHERE `order_item_id` = ".$idcan." AND meta_key = '_QTY'";
-    $result1PRca = mysqli_query($con, $preccant);
-    while($crow1PRcant = mysqli_fetch_assoc($result1PRca)) {
-
-    $nombredeproductoid = $crow1PRcant['meta_value']; 
-    $nombredeproducto = $crow1PR['order_item_name']; 
-    $printer->text(" ".$nombredeproductoid." | ".$nombredeproducto." | $".$TOTAL."\n");
-
-    }
-}
-
-        $preccantsum = "SELECT * FROM `wp_woocommerce_order_itemmeta` WHERE `order_item_id` = ".$idcan." AND meta_key = '_line_total'";
-        $result1PRcasum = mysqli_query($con, $preccantsum);     
-        $suma_total = 0;
-
-
-
-    }
-
-            $ttot = "SELECT total_amount FROM `wp_wc_orders` WHERE `id` = ".$ids." ORDER BY id DESC";
-            $result1ttot = mysqli_query($con, $ttot);
-            while($crow1ttot = mysqli_fetch_assoc($result1ttot)) {
-            $idtts = $crow1ttot['total_amount']; 
-            $printer->text("-----------------------------"."\n");
+            # Vamos a alinear al centro lo próximo que imprimamos
             $printer->setJustification(Printer::JUSTIFY_CENTER);
 
-            $nombre_format_francais = number_format($idtts, 2, ',', ' ');
-            $printer -> setTextSize(2, 2);
 
-            $printer->text("TOTAL: $".$nombre_format_francais."\n");
-            $printer -> setTextSize(1, 1);
 
-        }
-                
+
+            $ids = $crow['id'];
+            $printer->setTextSize(2, 2);
+            $printer->text("" . "\n");
+            $printer->text("Orden #: " . $ids . "\n");
+            $printer->setTextSize(1, 1);
+            $printer->text("" . "\n");
+
+            #La fecha también
+            $printer->text(date("Y-m-d H:i:s") . "\n");
+            $printer->text("-----------------------------" . "\n");
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text("CANTIDAD  PRODUCTO    PRECIO.\n");
+            $printer->text("-----------------------------" . "\n");
+
+            $consulta2PR = "SELECT * FROM `wp_woocommerce_order_items` WHERE `order_id` = " . $ids . "";
+            $result1PR = mysqli_query($con, $consulta2PR);
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            while ($crow1PR = mysqli_fetch_assoc($result1PR)) {
+                $idcan = $crow1PR['order_item_id'];
+
+                $preccant = "SELECT * FROM `wp_woocommerce_order_itemmeta` WHERE `order_item_id` = " . $idcan . " AND meta_key = '_line_total'";
+                $result1PRca = mysqli_query($con, $preccant);
+                while ($crow1PRcant = mysqli_fetch_assoc($result1PRca)) {
+
+                    $TOTAL = $crow1PRcant['meta_value'];
+                    //$TOTAL = $crow1PRcant['meta_value']; 
+
+
+                    $preccant = "SELECT * FROM `wp_woocommerce_order_itemmeta` WHERE `order_item_id` = " . $idcan . " AND meta_key = '_QTY'";
+                    $result1PRca = mysqli_query($con, $preccant);
+                    while ($crow1PRcant = mysqli_fetch_assoc($result1PRca)) {
+
+                        $nombredeproductoid = $crow1PRcant['meta_value'];
+                        $nombredeproducto = $crow1PR['order_item_name'];
+                        $printer->text(" " . $nombredeproductoid . " | " . $nombredeproducto . " | $" . $TOTAL . "\n");
+                    }
+                }
+
+                $preccantsum = "SELECT * FROM `wp_woocommerce_order_itemmeta` WHERE `order_item_id` = " . $idcan . " AND meta_key = '_line_total'";
+                $result1PRcasum = mysqli_query($con, $preccantsum);
+                $suma_total = 0;
+            }
+
+            $ttot = "SELECT total_amount FROM `wp_wc_orders` WHERE `id` = " . $ids . " ORDER BY id DESC";
+            $result1ttot = mysqli_query($con, $ttot);
+            while ($crow1ttot = mysqli_fetch_assoc($result1ttot)) {
+                $idtts = $crow1ttot['total_amount'];
+                $printer->text("-----------------------------" . "\n");
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+
+                $nombre_format_francais = number_format($idtts, 2, ',', ' ');
+                $printer->setTextSize(2, 2);
+
+                $printer->text("TOTAL: $" . $nombre_format_francais . "\n");
+                $printer->setTextSize(1, 1);
+            }
+
             $printer->text("" . "\n");
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $printer->text("-----------------------------"."\n");
+            $printer->text("-----------------------------" . "\n");
             $printer->text("DIRECCIÓN Y NUMERO DE CLIENTE \n");
             $printer->text("" . "\n");
-            $printer -> setTextSize(2, 2);
-            $printer->text(utf8_encode($direccion). "\n");
-            $printer -> setTextSize(1, 1);
+            $printer->setTextSize(2, 2);
+            $printer->text(utf8_encode($direccion) . "\n");
+            $printer->setTextSize(1, 1);
             $printer->text("" . "\n");
 
 
@@ -134,7 +129,7 @@ $printer->text("-----------------------------"."\n");
 
             $printer->close();
 
-                        
+
             $connector = new WindowsPrintConnector($nombre_impresora);
             $printer = new Printer($connector);
             # Vamos a alinear al centro lo próximo que imprimamos
@@ -191,19 +186,18 @@ $printer->text("-----------------------------"."\n");
             }
 
             // Imprime el total
-            $ttot = "SELECT total_amount FROM `wp_wc_orders` WHERE `id` = ".$ids." ORDER BY id DESC";
+            $ttot = "SELECT total_amount FROM `wp_wc_orders` WHERE `id` = " . $ids . " ORDER BY id DESC";
             $result1ttot = mysqli_query($con, $ttot);
-            while($crow1ttot = mysqli_fetch_assoc($result1ttot)) {
-            $idtts = $crow1ttot['total_amount']; 
-            $printer->text("-----------------------------"."\n");
-            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            while ($crow1ttot = mysqli_fetch_assoc($result1ttot)) {
+                $idtts = $crow1ttot['total_amount'];
+                $printer->text("-----------------------------" . "\n");
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
 
-            $nombre_format_francais = number_format($idtts, 2, ',', ' ');
-            $printer -> setTextSize(2, 2);
+                $nombre_format_francais = number_format($idtts, 2, ',', ' ');
+                $printer->setTextSize(2, 2);
 
-            $printer->text("TOTAL: $".$nombre_format_francais."\n");
-            $printer -> setTextSize(1, 1);
-
+                $printer->text("TOTAL: $" . $nombre_format_francais . "\n");
+                $printer->setTextSize(1, 1);
             }
 
             // Imprime la dirección del cliente
@@ -247,6 +241,7 @@ $printer->text("-----------------------------"."\n");
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -259,6 +254,7 @@ $printer->text("-----------------------------"."\n");
             background-color: blue;
             text-align: center;
         }
+
         h1 {
             display: inline-block;
             margin-top: 50px;
@@ -267,11 +263,13 @@ $printer->text("-----------------------------"."\n");
             border-bottom: solid 5px white;
             transform: skew(0, -5deg);
         }
+
         section {
             background-color: orangered;
         }
     </style>
 </head>
+
 <body>
     <section>
         <h1 id="order-status">
@@ -282,4 +280,5 @@ $printer->text("-----------------------------"."\n");
         </div>
     </section>
 </body>
+
 </html>
