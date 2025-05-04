@@ -1,0 +1,10 @@
+SOLEDAD
+EJECUTAR ngrok.exe
+COPIAR Y PEGAR EN LA TERMINAL 
+ngrok http --url=satyr-exciting-fowl.ngrok-free.app 8080
+
+ABRIR EN EL NAVEGADOR 
+https://satyr-exciting-fowl.ngrok-free.app/pos/pos-woo.php
+
+MADELENA
+ngrok config add-authtoken 2wbZkNhH4Ke0pUBeRgIhxYtYUfM_BiSd2xM2t4v2sc9DhfAv

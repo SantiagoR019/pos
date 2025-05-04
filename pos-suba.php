@@ -155,7 +155,7 @@ $printer->text("-----------------------------"."\n");
             $printer->setTextSize(1, 1);
             $printer->text("\n");
             $printer->text("-----------------------------\n");
-            $printer->text("\nPUNTO SOLEDAD\n");
+            $printer->text("\nPUNTO SUBA\n");
             $printer->text("Licorera Buhos Nocturnos\n");
             $printer->text("www.buhosnocturnos.com\n");
             $printer->text("Gracias por tu Compra\n");
