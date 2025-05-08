@@ -198,7 +198,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Imprime la dirección del cliente
             $printer->text("-----------------------------\n");
             $printer->text("DIRECCIÓN Y NUMERO DE CLIENTE\n");
+            $printer->text("" . "\n");
+            $printer -> setTextSize(2, 2);
             $printer->text(utf8_encode($direccion) . "\n");
+            $printer -> setTextSize(1, 1);
             $printer->text("-----------------------------\n");
 
             // Mensaje adicional
